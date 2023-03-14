@@ -56,7 +56,7 @@ public class Casilla {
         return posicion;
     }
 
-    public Casilla getCasilla() {
+    public Casilla cloneCasilla() {
         return new Casilla(getPosicion(), getSimbolo());
     }
 }

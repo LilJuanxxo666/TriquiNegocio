@@ -13,7 +13,7 @@ public class Tablero {
     }
 
     private void inicializar() {
-        for (byte indice = 1; indice < 9; indice++) {
+        for (byte indice = 1; indice <= 9; indice++) {
             tablero.put(indice, new Casilla(indice));
         }
     }
@@ -22,7 +22,7 @@ public class Tablero {
         Map<Byte, Casilla> tablero = new HashMap<>();
 
         for (byte indice = 1; indice <= 9; indice++) {
-            tablero.put(indice, this.tablero.get(indice).getCasilla());
+            tablero.put(indice, this.tablero.get(indice).cloneCasilla());
         }
         return tablero;
     }
