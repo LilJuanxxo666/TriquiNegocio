@@ -27,7 +27,7 @@ public class Tablero {
         return tablero;
     }
 
-    private boolean ternaEsValida(byte posicionUno, byte posicionDos, byte posicionTres) {
+    public boolean ternaEsValida(byte posicionUno, byte posicionDos, byte posicionTres) {
         List<Casilla> casillas = new ArrayList<>();
 
         casillas.add(tablero.get(posicionUno));
