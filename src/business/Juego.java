@@ -5,7 +5,8 @@ import java.util.*;
 public class Juego {
     private Map<Integer ,Jugador> jugadores = new HashMap<>();
     private Scanner entrada = new Scanner(System.in);
-    private Map<Byte, Casilla> tablero = new Tablero().getTablero();
+
+    private Tablero tablero = new Tablero();
 
     public Juego(){
         getJugadores();
@@ -13,27 +14,24 @@ public class Juego {
     }
 
     private void jugar(){
-        while(tablero.values().stream().filter(casilla -> casilla.getSimbolo().equals(jugadores.get(1).getSimbolo())).count() < 5){
+        while(tablero.getTablero().values().stream().filter(casilla -> casilla.getSimbolo().equals(jugadores.get(1).getSimbolo())).count() < 5){
             System.out.println("Ingresa la posición a jugar(1-9)");
             System.out.println(jugadores.get(getTurno()).getNombreJugador());
             byte posicion = entrada.nextByte();
-            if (!tablero.get(posicion).estaMarcada()){
-                tablero.get(posicion).marcar(jugadores.get(getTurno()).getSimbolo());
+            if (!tablero.getTablero().get(posicion).estaMarcada()){
+                tablero.getTablero().get(posicion).marcar(jugadores.get(getTurno()).getSimbolo());
             }
-            toStringTablero();
+            tablero.toStringTablero();
+            byte[][] terna = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                    {1, 4, 7}, {2, 5, 8}, {3, 6, 9},
+                    {1, 5, 9}, {3, 5, 7}};
+            for(byte[] ciclo:terna){
+                if(tablero.ternaEsValida(ciclo[0], ciclo[1], ciclo[2])){
+                    System.out.println("Gano");
+                }
+            }
         }
     }
-    private void toStringTablero(){
-        byte indice = 1;
-        for (int fila = 0; fila < 3; fila++) {
-            for (int columna = 0; columna < 3; columna++) {
-                System.out.print(tablero.get(indice).getSimbolo() + " ");
-                indice += 1;
-            }
-            System.out.println();
-        }
-    }
-
     private void getJugadores(){
         for (int i = 1; i < 3 ; i ++){
             System.out.println("Ingresa el jugador ("+i+")");
@@ -42,6 +40,12 @@ public class Juego {
             System.out.println("Ingresa el simbolo");
             String simbolo = entrada.next();
             jugadores.put(i, new Jugador(nombre, simbolo));
+        }
+        if(jugadores.get(1).getSimbolo().equalsIgnoreCase(jugadores.get(2).getSimbolo()) ||
+                jugadores.get(1).getNombreJugador().equalsIgnoreCase(jugadores.get(2).getNombreJugador())){
+            System.out.println("Simbolos o nombres iguales");
+            jugadores.clear();
+            getJugadores();
         }
     }
     /*private void getTurno(){
@@ -58,11 +62,11 @@ public class Juego {
         }
     }*/
     private int getTurno(){
-        return (int) ((tablero.values().stream().filter(casilla -> !casilla.getSimbolo().equals("")).count() % 2) + 1);
+        return (int) ((tablero.getTablero().values().stream().filter(casilla -> !casilla.getSimbolo().equals("")).count() % 2) + 1);
         //Retorna el numero del jugador a jugar, depende de los signos que hayan en el tablero
     }
+
     public static void main(String[] args) {
         Juego juego = new Juego();
-
     }
 }

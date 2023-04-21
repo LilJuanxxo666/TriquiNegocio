@@ -1,4 +1,5 @@
 package business;
 
-public class TipoJugador {
+public enum TipoJugador {
+    JUGADOR,MAQUINA
 }

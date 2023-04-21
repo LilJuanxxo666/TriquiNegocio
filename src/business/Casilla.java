@@ -28,7 +28,7 @@ public class Casilla {
     }
 
     private boolean cadenaEsNulaOVacia (String cadena) {
-        return (cadena == null || "".intern() == cadena.trim().intern());
+        return (cadena == null || "".equals(cadena.trim().intern()));
     }
 
     private void setPosicion(byte posicion) {
