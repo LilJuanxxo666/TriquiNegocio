@@ -20,13 +20,9 @@ public class Tablero {
     public Map<Byte, Casilla> getTablero(){
         return tablero;
     }
-
-    private void setTablero(Map<Byte, Casilla> tablero) {
-        this.tablero = tablero;
-    }
-
     public void toStringTablero(){
         byte indice = 1;
+        System.out.println("-------");
         for (int fila = 0; fila < 3; fila++) {
             System.out.print("|");
             for (int columna = 0; columna < 3; columna++) {
@@ -39,37 +35,20 @@ public class Tablero {
             }
             System.out.println();
         }
+        System.out.println("-------");
     }
-    public boolean ternaEsValida(byte posicionUno, byte posicionDos, byte posicionTres) {
+    public boolean ternaEsValida() {
+        byte[][] terna = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}};
         List<Casilla> casillas = new ArrayList<>();
-
-        casillas.add(tablero.get(posicionUno));
-        casillas.add(tablero.get(posicionDos));
-        casillas.add(tablero.get(posicionTres));
-
-        return casillas.stream().map(Casilla::getSimbolo).distinct().count() == 1 && casillas.get(0).estaMarcada();
-    }
-
-    /*public Map<Byte, Casilla> getTablero(){
-        Map<Byte, Casilla> tablero = new HashMap<>();
-
-        for (byte indice = 1; indice <= 9; indice++) {
-            tablero.put(indice, this.tablero.get(indice).cloneCasilla());
-        }
-        return tablero;
-    }*/
-
-    /*public boolean ternaEsValida() {
-        byte[][] terna = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9},
-                {1, 4, 7}, {2, 5, 8}, {3, 6, 9},
-                {1, 5, 9}, {3, 5, 7}};
-        List<Casilla> casillas = new ArrayList<>();
-
-        for (byte i = 0; i < terna[0].length; i++) {
-            casillas.add(tablero.get(terna[i][0]));
-            casillas.add(tablero.get(terna[i][1]));
-            casillas.add(tablero.get(terna[i][2]));
+        for (byte[] bytes : terna) {
+            casillas.clear();
+            casillas.add(tablero.get(bytes[0]));
+            casillas.add(tablero.get(bytes[1]));
+            casillas.add(tablero.get(bytes[2]));
+            if(casillas.stream().map(Casilla::getSimbolo).distinct().count() == 1 && casillas.get(0).estaMarcada()){
+                break;
             }
+        }
         return casillas.stream().map(Casilla::getSimbolo).distinct().count() == 1 && casillas.get(0).estaMarcada();
-    }*/
+    }
 }

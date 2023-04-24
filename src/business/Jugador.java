@@ -3,12 +3,11 @@ package business;
 public class Jugador {
 
     private String nombreJugador, simbolo;
-    public Jugador(String simbolo) {
-        this.simbolo = setSimbolo(simbolo);
-    }
-    public Jugador(String nombreJugador, String simbolo) {
+    private TipoJugador tipoJugador;
+    public Jugador(String nombreJugador, String simbolo, TipoJugador tipoJugador) {
         this.simbolo = setSimbolo(simbolo);
         this.nombreJugador = setJugador(nombreJugador);
+        this.tipoJugador = tipoJugador;
     }
     private String setSimbolo(String simbolo){
         if(simbolo.trim().equals("")) {
@@ -25,7 +24,7 @@ public class Jugador {
         if(nombreJugador.trim().equals("")) {
             throw new RuntimeException("No es posible poner un nombre de jugador vacio o nulo");
         }
-        else if(nombreJugador.trim().length() > 8) {
+        else if(nombreJugador.trim().length() > 10) {
             throw new RuntimeException("No es posible poner un nombre con una longitud > 1");
         }
         else{
@@ -39,8 +38,6 @@ public class Jugador {
     public String getNombreJugador(){
         return nombreJugador;
     }
-    public Jugador getJugador(){
-        return new Jugador(getNombreJugador(), getSimbolo());
-    }
+    public TipoJugador getTipoJugador(){return tipoJugador; }
 
 }
